@@ -1,6 +1,5 @@
-greeting:
-  message: "hello"
-
 quarkus:
+  application:
+    name: quarkus-aot-benchmark
   package:
-    type: uber-jar
+    type: fast-jar # uber-jar

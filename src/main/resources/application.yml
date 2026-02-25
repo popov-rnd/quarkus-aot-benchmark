@@ -3,3 +3,9 @@ quarkus:
     name: quarkus-aot-benchmark
   package:
     type: fast-jar # uber-jar
+
+  log:
+    level: ${LOG_LEVEL_ROOT:INFO}
+    category:
+      "com.popovrnd":
+        level: ${LOG_LEVEL_BENCHMARK:WARN}

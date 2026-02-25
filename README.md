@@ -144,9 +144,14 @@ The Dockerfile copies the native executable into a minimal runtime base image (o
 *Static* metrics collected with the (*script*)[https://github.com/popov-rnd/script-aot-benchmark.git]
 *Dynamic* metrics are also scripted out, but final script is in-progress to be pushed.
 
-### Metrics
+### Static metrics
 
 - **Startup time** -> taken from .sh script output after first http 200 response (not relying on, Spring Boot's logs started in _ s).
 - **Memory usage** -> from standard RSS Unix tool, also in .sh script.
 - **Artifact size** -> from ls -lh or direct filesystem metadata.
 - ***Build time*** -> taken from Maven’s own build output (e.g., [INFO] BUILD SUCCESS in _ s).
+
+### Dynamic metrics
+
+- *Closed-model* concurrency/throughput curves;
+- *Open-model* offered throughput/latency charts;

@@ -14,7 +14,7 @@ public class DefaultResource {
 
     @GET
     public Response get() {
-        log.info("Default is called!");
+        //log.info("Default is called!");
         return Response.ok().build();
     }
 }

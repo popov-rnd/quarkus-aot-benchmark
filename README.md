@@ -48,7 +48,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: 
+You can then execute your native executable with:
 
 `./target/quarkus-aot-benchmark-1.0-SNAPSHOT-runner`
 

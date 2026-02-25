@@ -20,7 +20,8 @@ public class EchoResource {
 
     @POST
     public EchoRequest echo(@Valid EchoRequest request) {
-        log.info("Echo controller with payload = {}", request);
+        //log.info("Echo controller with payload = {}", request);
+        //log.info("Thread = {}", Thread.currentThread());
         return request;
     }
 }

@@ -2,12 +2,17 @@
 
 Benchmark project to compare JIT (JAR) vs AOT (native image) with Quarkus.
 
-We measure:
+We measure such *static* metrics:
 
 - Startup time;
-- Memory footprint (rss = shared + private);
+- Memory footprint;
 - Artifact size;
 - Compilation time (secondary).
+
+We measure such *dynamic* metrics:
+
+- *Closed-loop*: concurrency-throughput curves;
+- *Open-loop*: p50-p99 latencies distributions;
 
 Tested with Maven (wrapper), JVM: Temurin 25 / GraalVM Mandrel 25.
 
@@ -15,7 +20,9 @@ Tested with Maven (wrapper), JVM: Temurin 25 / GraalVM Mandrel 25.
 
 In Quarkus, the application entry point is generated at build time by the framework; no user-defined **main()** method is required.
 
-### Packaging soft-jar and running the app
+### Packaging and running the app
+
+### Local build
 
 In Quarkus, the ***soft-jar*** (default packaging) is a *directory-based* runnable application, not a single JAR.
 
@@ -48,6 +55,18 @@ It is now runnable using:
 ***Important***:
 The entire *quarkus-app/* directory must be present.
 *quarkus-run.jar* cannot run standalone.
+
+### Dockerized build
+
+In Quarkus, the *src/main/docker/* folder contains pre-generated Dockerfiles (such as *Dockerfile.jvm*) designed to containerize the default fast-jar output located under *target/quarkus-app/*. After running `./mvnw package`, Quarkus produces the directory-based fast-jar layout (quarkus-run.jar, lib/, app/, quarkus/). To build a JVM container image manually, you simply execute:
+
+```
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus-aot-benchmark:jvm .
+```
+
+The Dockerfile copies the entire target/quarkus-app/ structure into the image and runs `java -jar quarkus-run.jar` as the entrypoint. It is important that the full quarkus-app/ directory remains intact, as quarkus-run.jar cannot run standalone. This approach gives full control over base image selection, JVM flags, and container runtime limits while keeping the build process transparent and deterministic.
+
+For more see [the official doc](https://quarkus.io/guides/maven-tooling#fast-jar)
 
 ## AOT compilation
 
@@ -108,10 +127,22 @@ You can then execute your native executable with:
 
 More [Native image](https://quarkus.io/guides/maven-tooling#building-a-native-executable)
 
+#### Dockerized build
+
+In Quarkus , the *src/main/docker/* folder contains *Dockerfile.native*, which is designed to containerize the GraalVM-generated native executable. After building the native binary using: `./mvnw package -Dnative` 
+
+Quarkus produces a compiled executable under target/ (e.g., *-runner). To build the container image manually, run:
+
+```
+docker build -f src/main/docker/Dockerfile.native -t quarkus-aot-benchmark:native .
+```
+
+The Dockerfile copies the native executable into a minimal runtime base image (often UBI minimal or distroless) and sets it as the container entrypoint. Unlike JVM mode, no JRE is required inside the image because the application is already compiled to a standalone native binary. This results in smaller image size, lower startup time, and reduced memory overhead, while still allowing full control over base image selection and container resource limits.
 
 ## Running Benchmarks
 
-Metrics collected with the (*script*)[https://github.com/popov-rnd/script-aot-benchmark.git]
+*Static* metrics collected with the (*script*)[https://github.com/popov-rnd/script-aot-benchmark.git]
+*Dynamic* metrics are also scripted out, but final script is in-progress to be pushed.
 
 ### Metrics
 

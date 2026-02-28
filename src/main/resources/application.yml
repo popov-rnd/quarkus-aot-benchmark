@@ -2,7 +2,8 @@ quarkus:
   application:
     name: quarkus-aot-benchmark
   package:
-    type: fast-jar # uber-jar
+    jar:
+      type: fast-jar # uber-jar
 
   log:
     level: ${LOG_LEVEL_ROOT:INFO}

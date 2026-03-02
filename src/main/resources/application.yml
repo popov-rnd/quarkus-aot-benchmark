@@ -4,9 +4,13 @@ quarkus:
   package:
     jar:
       type: fast-jar # uber-jar
+  #thread-pool:
+    #max-threads: 20
+  rest-client:
+    connection-pool-size: 1000 #50 by default
 
   log:
     level: ${LOG_LEVEL_ROOT:INFO}
     category:
       "com.popovrnd":
-        level: ${LOG_LEVEL_BENCHMARK:WARN}
+        level: ${LOG_LEVEL_BENCHMARK:INFO}

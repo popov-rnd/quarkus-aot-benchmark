@@ -10,7 +10,7 @@ quarkus:
     connection-pool-size: 1000 #50 by default
 
   log:
-    level: ${LOG_LEVEL_ROOT:INFO}
+    level: ${LOG_LEVEL_ROOT:WARN}
     category:
       "com.popovrnd":
-        level: ${LOG_LEVEL_BENCHMARK:INFO}
+        level: ${LOG_LEVEL_BENCHMARK:WARN}

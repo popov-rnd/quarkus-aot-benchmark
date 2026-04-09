@@ -1,4 +1,4 @@
-# Quarkus AOT&JIT Benchmarks
+# Quarkus Benchmarks
 
 Benchmark project to compare JIT (JAR) vs AOT (native image) with Quarkus.
 
@@ -138,20 +138,3 @@ docker build -f src/main/docker/Dockerfile.native -t quarkus-aot-benchmark:nativ
 ```
 
 The Dockerfile copies the native executable into a minimal runtime base image (often UBI minimal or distroless) and sets it as the container entrypoint. Unlike JVM mode, no JRE is required inside the image because the application is already compiled to a standalone native binary. This results in smaller image size, lower startup time, and reduced memory overhead, while still allowing full control over base image selection and container resource limits.
-
-## Running Benchmarks
-
-*Static* metrics collected with the (*script*)[https://github.com/popov-rnd/script-aot-benchmark.git]
-*Dynamic* metrics are also scripted out, but final script is in-progress to be pushed.
-
-### Static metrics
-
-- **Startup time** -> taken from .sh script output after first http 200 response (not relying on, Spring Boot's logs started in _ s).
-- **Memory usage** -> from standard RSS Unix tool, also in .sh script.
-- **Artifact size** -> from ls -lh or direct filesystem metadata.
-- ***Build time*** -> taken from Maven’s own build output (e.g., [INFO] BUILD SUCCESS in _ s).
-
-### Dynamic metrics
-
-- *Closed-model* concurrency/throughput curves;
-- *Open-model* offered throughput/latency charts;

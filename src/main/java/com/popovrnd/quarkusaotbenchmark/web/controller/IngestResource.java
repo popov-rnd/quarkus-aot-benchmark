@@ -18,7 +18,7 @@ public class IngestResource {
             LoggerFactory.getLogger(IngestResource.class);
 
     @POST
-    @Path("/ingest")// ~300 bytes payload
+    @Path("/ingest")
     public Response ingest(@Valid IngestRequest request) {
         //log.info("Ingest body, thread = {}, request = {}", Thread.currentThread(), request);
         return Response.noContent().build();

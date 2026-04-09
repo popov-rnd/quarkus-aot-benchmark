@@ -1,9 +1,6 @@
 ### Default test
 GET http://localhost:8080/
 
-### IO test
-GET http://localhost:8080/io
-
 
 ### Ingest test (~300 bytes payload)
 POST http://localhost:8080/ingest
